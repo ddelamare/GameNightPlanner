@@ -1,28 +1,27 @@
 import { useState } from 'react'
 import './App.css'
-import { ClientBuilder } from './services/ClientBuilder';
+import { BggService } from './services/BggService';
+import { UserService } from './services/UserService';
+
 
 function App() {
-  const [bggJson, setBggJson] = useState("")
-  const [cookieJson, setCookieJson] = useState("")
+  const [games, setGames] = useState([])
+  const [hasCookie, setCookieJson] = useState(false)
 
   return (
     <>
       <h1>Plan Your Game Nights in Style</h1>
+      <button onClick={async () => setCookieJson(await UserService.login())}>
+          Click here to login: {hasCookie? 'you!' : 'anon'}
+      </button>
       <div className="card">
-        <button onClick={async () => setBggJson(JSON.stringify(await ClientBuilder.getClient().get('/users/')))}>
-          Click here to load search {bggJson}
+        <button onClick={async () => setGames(await BggService.getUserGames())}>
+          Click here to load search
         </button>
-        <button onClick={async () => setCookieJson(JSON.stringify(await ClientBuilder.getClient().get('/login/')))}>
-          Click here to set cookie {cookieJson}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <div className="gameList">
+          {games.map((g, key) => <div key={key}><img className="thumbnail" src={g.thumbnail}></img></div>)}
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }

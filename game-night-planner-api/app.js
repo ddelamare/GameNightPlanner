@@ -1,14 +1,17 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var cors = require('cors')
-var logger = require('morgan');
+import express from 'express'
+import path from 'path'
+import cookieParser from 'cookie-parser'
+import cors from  'cors'
+import logger from 'morgan'
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import indexRouter from './routes/index.js';
+import usersRouter from './routes/users.js';
+import loginRouter from './routes/login.js';
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
+var __dirname = path.resolve(path.dirname(''));
 
-var app = express();
+const app = express();
 
 var corsOptions = {
     origin: 'http://127.0.0.1:5173',
@@ -28,4 +31,4 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 
-module.exports = app; 
+export default app;    
