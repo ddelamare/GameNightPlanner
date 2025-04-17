@@ -9,8 +9,15 @@ router.get('/', function(req, res, next) {
 
 /* GET User games*/
 router.get('/games', async function(req, res, next) {
-  var results = await bgg.collection({username: req.cookies['user']})
+  var results = await bgg.collection(
+    {
+      username: req.cookies['user'],
+      own: '1',
+      brief: '0',
+      stats: '1',
+      excludesubtype: "boardgameexpansion"
+    })
   res.send(results.items);
 });
 
-export default router; 
+export default router;  
