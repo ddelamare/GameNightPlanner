@@ -9,7 +9,7 @@ function App() {
     <>
       <h1>Plan Your Game Nights in Style</h1>
       <div className="card">
-        <button onClick={async () => setBggJson(JSON.stringify(await ClientBuilder.getClient().get('/users/', {withCredentials: false})))}>
+        <button onClick={async () => setBggJson(JSON.stringify(await ClientBuilder.getClient().get('/users/')))}>
           Click here to load search {bggJson}
         </button>
         <p>
