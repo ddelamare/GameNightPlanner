@@ -4,7 +4,8 @@ export abstract class ClientBuilder {
         var client = axios.create({
             baseURL: 'http://127.0.0.1:3000',
             withCredentials: true,
-            headers: {'Authorization': 'foobar'}
+            headers: {'Authorization': 'foobar'},
+            allowAbsoluteUrls: false
         });
 
         client.interceptors.request.use(function (config) {

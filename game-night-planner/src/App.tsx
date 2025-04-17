@@ -4,6 +4,7 @@ import { ClientBuilder } from './services/ClientBuilder';
 
 function App() {
   const [bggJson, setBggJson] = useState("")
+  const [cookieJson, setCookieJson] = useState("")
 
   return (
     <>
@@ -11,6 +12,9 @@ function App() {
       <div className="card">
         <button onClick={async () => setBggJson(JSON.stringify(await ClientBuilder.getClient().get('/users/')))}>
           Click here to load search {bggJson}
+        </button>
+        <button onClick={async () => setCookieJson(JSON.stringify(await ClientBuilder.getClient().get('/login/')))}>
+          Click here to set cookie {cookieJson}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
