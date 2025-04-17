@@ -19,7 +19,14 @@ function App() {
           Click here to load search
         </button>
         <div className="gameList">
-          {games.map((g, key) => <div key={key}><img className="rounded" src={g.thumbnail}></img></div>)}
+          {games.map((g, key) => 
+          <div key={key}>
+            <h4>{g.name}</h4>
+            <img className="rounded" src={g.thumbnail}></img>
+            <div>
+              <span>{g.minPlayers}-{g.maxPlayers} p @ {g.playtime}m</span>
+            </div>
+          </div>)}
         </div>
       </div>
     </>

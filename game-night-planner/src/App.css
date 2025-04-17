@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .card {
@@ -12,14 +13,20 @@
 .gameList {
   display: flex; 
   flex-wrap: wrap;  
-  flex: 0 0 25%; 
+  flex: 0 0 20%; 
   justify-content:space-between;
 }
 
 .gameList > div {
-  width: 25%; 
-  height: 150px; 
-  margin-bottom: 20px;
+  width: 20%; 
+  margin-bottom: 40px;
+  border: 1px solid white;
+  padding: 1em;
+  border-radius: 10px;
+}
+
+.gameList > div:hover {
+  background-color: var(--hover-color);
 }
 
 .rounded {
