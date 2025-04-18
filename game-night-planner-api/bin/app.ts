@@ -5,9 +5,9 @@ import cors from  'cors'
 import logger from 'morgan'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
-import loginRouter from './routes/login.js';
+import indexRouter from './src/routes/index.js';
+import usersRouter from './src/routes/users.js';
+import loginRouter from './src/routes/login.js';
 
 var __dirname = path.resolve(path.dirname(''));
 
@@ -30,5 +30,13 @@ var corsOptions = {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
+
+
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
+})
+
 
 export default app;    
