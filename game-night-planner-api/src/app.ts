@@ -5,10 +5,11 @@ import cors from  'cors'
 import logger from 'morgan'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
-import loginRouter from './routes/login.js';
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
+import loginRouter from './routes/login';
 
+import { errorHandler } from './middlewares/errorHandler';
 var __dirname = path.resolve(path.dirname(''));
 
 const app = express();
@@ -27,16 +28,12 @@ var corsOptions = {
   app.use(cookieParser());
   app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/login', loginRouter);
+  app.use('/users', usersRouter);
+  app.use('/login', loginRouter);
+  app.use('/', indexRouter);
+  
+  app.use(errorHandler);
 
-
-// Error handling
-app.use((err, req, res, next) => {
-  console.error(err.stack)
-  res.status(500).send('Something broke!')
-})
 
 
 export default app;    

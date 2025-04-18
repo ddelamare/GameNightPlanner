@@ -2,10 +2,11 @@ import { useState } from 'react'
 import './App.css'
 import { BggService } from './services/BggService';
 import { UserService } from './services/UserService';
+import GameInfo from '@backend/gameInfo'
 
 
 function App() {
-  const [games, setGames] = useState([])
+  const [games, setGames] = useState<GameInfo[]>([]);
   const [hasCookie, setCookieJson] = useState(false)
 
   return (
@@ -24,7 +25,7 @@ function App() {
             <h4>{g.name}</h4>
             <img className="rounded" src={g.thumbnail}></img>
             <div>
-              <span>{g.minPlayers}-{g.maxPlayers} p @ {g.playtime}m</span>
+              <span>{g.minPlayers}-{g.maxPlayers} p @ {g.playingTime}m</span>
             </div>
           </div>)}
         </div>
