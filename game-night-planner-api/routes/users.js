@@ -3,6 +3,11 @@ import express from 'express';
 import { ArrayUtil } from '../util/array.js';
 var router = express.Router();
 
+
+/**
+ * @typedef {import().PayloadThing} PayloadThing
+ */
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource also 22');
@@ -21,8 +26,11 @@ router.get('/games', async function(req, res, next) {
     // Chunk to sizer 20 because that's what the bgg api allows
     var itemGroups = ArrayUtil.partition(results.items, 20);
     console.log("partitions:",results.items.length, itemGroups.length)
+
+    /** @type {Array<PayloadThing>} */
     var gameList = [];
     for(var i = 0; i < itemGroups.length; i ++) {
+       /** @type {Array<string>} */
       var idList = itemGroups[i].map(i => i.id + "");
       var chunk = await bgg.thing({
          id: idList
