@@ -3,7 +3,7 @@ import dbConfig from '../config/config';
 import { error } from 'console';
 import sql from 'mssql'
 
-const sqlConfig = {
+const sqlConfig : sql.config = {
   server: dbConfig.dbServer,
   authentication: {
     type: 'default',
@@ -24,5 +24,5 @@ const poolPromise = new sql.ConnectionPool(sqlConfig)
   .catch(err => console.log('Database Connection Failed! Bad Config: ', err))
 
 // Grabs a connection from the pool
-export const getConnection = async () => (await poolPromise).request();
+export const getConnection = async () => (await poolPromise)?.request();
 

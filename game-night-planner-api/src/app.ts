@@ -5,7 +5,6 @@ import cors from  'cors'
 import logger from 'morgan'
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import loginRouter from './routes/login';
 import { errorHandler } from './middlewares/errorHandler';
@@ -29,7 +28,6 @@ var corsOptions = {
 
   app.use('/users', usersRouter);
   app.use('/login', loginRouter);
-  app.use('/', indexRouter);
   
   app.use(errorHandler);
 
