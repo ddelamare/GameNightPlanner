@@ -1,7 +1,8 @@
-import { bgg } from 'bgg-sdk';
+import { bgg, PayloadTypes } from 'bgg-sdk';
 import express from 'express';
 import { ArrayUtil } from '../util/array.js';
 import GameInfo from '../models/gameInfo'
+
 var router = express.Router();
 
 
@@ -29,17 +30,17 @@ router.get('/games', async function(req, res, next) {
     console.log("partitions:",results.items.length, itemGroups.length)
 
     var gameList : GameInfo[] = [];
-    var chunkList : GameInfo[] = [];
+    var chunkList : any[] = [];
     for(var i = 0; i < itemGroups.length; i ++) {
       var idList = itemGroups[i].map(i => i.id + "");
       var chunk = await bgg.thing({
          id: idList
       });
-      chunkList = chunkList.concat(chunk.items as unknown);
+      chunkList = chunkList.concat(chunk.items);
     }
     gameList = chunkList.map(m =>  ({
       id: m.id,
-      name: m.names.find(n => n.type === 'primary').value,
+      name: m.names.find((n : PayloadTypes.PayloadThingNames) => n.type === 'primary').value,
       playingTime: m.playingTime,
       minPlayers: m.minPlayers,
       maxPlayers: m.maxPlayers,
