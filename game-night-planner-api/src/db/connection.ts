@@ -1,8 +1,9 @@
 import {Connection, ConnectionConfiguration, Request}  from 'tedious'
 import dbConfig from '../config/config';
 import { error } from 'console';
+import sql from 'mssql'
 
-const config : ConnectionConfiguration= {
+const sqlConfig = {
   server: dbConfig.dbServer,
   authentication: {
     type: 'default',
@@ -11,50 +12,17 @@ const config : ConnectionConfiguration= {
       password: dbConfig.dbPass
     }
   }
-} 
+}; 
 
-const connection = new Connection(config)
-console.log(config)
-connection.on("error", (err) => {
-    console.log("connected?")
-  if (err) {
-    console.log(err)
-  } else {
-    console.log("err'");
-  }
-})
-connection.on('connect', (err) => {
-    console.log("connected?")
-  if (err) {
-    console.log(err)
-  } else {
-    executeStatement()
-  }
-})
-
-function executeStatement () {
-  var request = new Request("select 123, 'hello world'", (err, rowCount) => {
-    if (err) {
-      console.log(err)
-    } else {
-      console.log(`${rowCount} rows`)
-    }
-    connection.close()
+// Sets us a shared connection pool
+const poolPromise = new sql.ConnectionPool(sqlConfig)
+  .connect()
+  .then(pool => {
+    console.log('Connected to MSSQL')
+    return pool
   })
+  .catch(err => console.log('Database Connection Failed! Bad Config: ', err))
 
-  request.on('row', (columns) => {
-    columns.forEach((column) => {
-      if (column.value === null) {
-        console.log('NULL')
-      } else {
-        console.log(column.value)
-      }
-    })
-  })
+// Grabs a connection from the pool
+export const getConnection = async () => (await poolPromise).request();
 
-  connection.execSql(request)
-}
-
-export default function init() {
-    connection.connect();
-}

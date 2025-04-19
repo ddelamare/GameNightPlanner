@@ -2,14 +2,17 @@ import { bgg, PayloadTypes } from 'bgg-sdk';
 import express from 'express';
 import { ArrayUtil } from '../util/array.js';
 import GameInfo from '../models/gameInfo'
+import { getConnection } from '../db/connection';
 
 var router = express.Router();
 
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource also 22');
+router.get('/', async function(req, res, next) {
+   const result = await (await getConnection()).query`select 12345`;
+   console.log(result);
+   res.send('this endpoint does nothing');
 });
 
 /* GET User games*/
