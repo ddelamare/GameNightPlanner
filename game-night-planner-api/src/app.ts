@@ -8,7 +8,7 @@ import { dirname } from 'path';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import loginRouter from './routes/login';
-
+import init from './db/connection'
 import { errorHandler } from './middlewares/errorHandler';
 var __dirname = path.resolve(path.dirname(''));
 
@@ -34,6 +34,6 @@ var corsOptions = {
   
   app.use(errorHandler);
 
+  init();
 
-
-export default app;    
+export default app;     
